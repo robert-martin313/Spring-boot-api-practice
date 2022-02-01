@@ -2,6 +2,8 @@ package in.adsingh.springrestapi.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -87,7 +89,7 @@ public class EmployeeController {
 		return "saving the employee details in database " + employee;
 	}*/
 	
-	public Employee saveEmployee(@RequestBody Employee employee) {
+	public Employee saveEmployee(@Valid @RequestBody Employee employee) {
 		return eService.saveEmployee(employee);
 	}
 	
