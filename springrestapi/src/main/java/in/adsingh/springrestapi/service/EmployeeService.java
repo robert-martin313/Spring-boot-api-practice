@@ -6,7 +6,7 @@ import in.adsingh.springrestapi.model.Employee;
 
 public interface EmployeeService {
 	
-	List<Employee> getEmployees();
+	List<Employee> getEmployees(int pageNumber, int pageSize);
 	
 	Employee saveEmployee (Employee employee);
 	
@@ -15,6 +15,13 @@ public interface EmployeeService {
 	void deleteEmployee (Long id);
 	
 	Employee updateEmployee(Employee employee);
+	
+	List<Employee> geEmployeesByName(String name);
+	
+	List<Employee> geEmployeesByNameAndDepartment(String name, String department);
+	
+	List<Employee> getEmployeesByKeyword(String name);
+	
 
 
 

@@ -6,6 +6,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,8 +53,8 @@ public class EmployeeController {
 	}*/
 	
 	@GetMapping("/employees")
-	public List<Employee> getEmployees() {
-		return eService.getEmployees();
+	public ResponseEntity<List<Employee>> getEmployees(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+		return new ResponseEntity<List<Employee>>(eService.getEmployees(pageNumber, pageSize),HttpStatus.OK);
 	}
 	
 	
@@ -64,8 +66,8 @@ public class EmployeeController {
 		return "Fetching the employee details for id: " + id;
 	}*/
 	
-	public Employee getEmployee(@PathVariable("id") Long id) {
-		return eService.getSingleEmployee(id);
+	public ResponseEntity<Employee> getEmployee(@PathVariable("id") Long id) {
+		return new ResponseEntity<Employee>(eService.getSingleEmployee(id),HttpStatus.OK);
 	}
 	
 	
@@ -76,8 +78,8 @@ public class EmployeeController {
 	/*public String deleteEmployee(@RequestParam("id") Long id) {
 		return "Deleteing the employee details for id: " + id;
 	}*/
-	public void deleteEmployee(@RequestParam("id") Long id) {
-		eService.deleteEmployee(id);
+	public ResponseEntity<HttpStatus> deleteEmployee(@RequestParam("id") Long id) {
+		return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
 	}
 	
 	
@@ -89,19 +91,39 @@ public class EmployeeController {
 		return "saving the employee details in database " + employee;
 	}*/
 	
-	public Employee saveEmployee(@Valid @RequestBody Employee employee) {
-		return eService.saveEmployee(employee);
+	public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody Employee employee) {
+		return new ResponseEntity<>(eService.saveEmployee(employee),HttpStatus.CREATED);
 	}
 	
 	
 	@PutMapping("/employees/{id}")
-	public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+	public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
 		employee.setId(id);
-		return eService.updateEmployee(employee);
+		return new ResponseEntity<Employee>(eService.updateEmployee(employee),HttpStatus.OK);
 		
 	}
 	
 	
+	@GetMapping("/employees/filterByName")
+	public ResponseEntity<List<Employee>> getEmployeesByName(@RequestParam String name)	{
+		return new ResponseEntity<List<Employee>>(eService.geEmployeesByName(name),HttpStatus.OK);
+		
+	}
+	
+	
+	@GetMapping("/employees/filterByNameAndDepartment")
+	public ResponseEntity<List<Employee>> geEmployeesByNameAndDepartment(@RequestParam String name, @RequestParam String department)	{
+		return new ResponseEntity<List<Employee>>(eService.geEmployeesByNameAndDepartment(name, department),HttpStatus.OK);
+		
+	}
+	
+	
+	
+	@GetMapping("/employees/filterByNameKeyword")
+	public ResponseEntity<List<Employee>> getEmployeesByKeyword(@RequestParam String name)	{
+		return new ResponseEntity<List<Employee>>(eService.getEmployeesByKeyword(name),HttpStatus.OK);
+		
+	}
 	  
 
 }

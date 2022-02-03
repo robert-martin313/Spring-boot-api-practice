@@ -7,7 +7,11 @@ import java.lang.*;
 import java.security.cert.PKIXRevocationChecker.Option;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 
 import in.adsingh.springrestapi.model.Employee;
 import in.adsingh.springrestapi.repository.EmployeeRepository;
@@ -52,9 +56,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeRepository eRepository;
 	
 	@Override
-	public List<Employee> getEmployees() {
-		
-		return eRepository.findAll();
+	public List<Employee> getEmployees(int pageNumber, int pageSize) {
+		//Sorting and paging combine
+		Pageable pages = PageRequest.of(pageNumber, pageSize, Direction.DESC, "id");
+		return eRepository.findAll(pages).getContent();
 	}
 	
 	
@@ -89,5 +94,33 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee updateEmployee(Employee employee) {
 		return eRepository.save(employee);
 	}
+
+
+
+	@Override
+	public List<Employee> geEmployeesByName(String name) {
+		
+		return eRepository.findByName(name);
+	}
+
+
+
+	@Override
+	public List<Employee> geEmployeesByNameAndDepartment(String name, String department) {
+		return eRepository.findByNameAndDepartment(name, department);
+	}
+
+
+
+	@Override
+	public List<Employee> getEmployeesByKeyword(String name) {
+		
+		//for sorting purpose
+		Sort sort = Sort.by(Sort.Direction.DESC, "id");
+		return eRepository.findByNameContaining(name, sort);//what to do with case sensitive
+	}
+
+
+
 
 }

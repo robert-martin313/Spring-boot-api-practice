@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,7 +39,9 @@ public class Employee {
 	//if we want to change name to full name
 	//@JsonProperty("full_name")
 	//@Column(name="name")//Column annotation is not necessary if column namr in database is same as name written here then you can skip this
-	@NotNull(message = "Name should not be null")
+	//@NotEmpty(message = "Name should not be empty") //will check for null and empty stuff
+	//@NotNull(message = "Name should not be null")
+	@NotBlank(message = "Name should not be empty") //will check for both annotations above as well as check if only white space is given or not
 	private String name;
 	
 	//@JsonIgnore if we want to ignore age
@@ -52,7 +56,8 @@ public class Employee {
 	
 	
 	//@Column(name="department")
-	@NotNull(message = "Department should not be null")
+	//@NotEmpty(message = "Department should not be empty")
+	@NotBlank(message = "Department should not be empty")
 	private String department;
 	
 	@CreationTimestamp
