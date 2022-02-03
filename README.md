@@ -10,7 +10,7 @@
 - springrestapi folder contains source code as well as compiled code unzip springrestapi.zip if you can't find that (springrestapi/target/springrestapi-0.0.1-SNAPSHOT.jar).
 - tbl_employee1.csv contains info data in database at time of testing with columns: id, age, name, email, department.
 - tbl_employee2.csv contains updated info data in database at time of testing with columns: id, age, name, email, department, created_at, update_at.
-- tbl_employee2.csv contains updated info data in database at time of testing with columns: id, age, name, email, department, created_at, update_at. `Latest`
+- tbl_employee3.csv contains updated info data in database at time of testing with columns: id, age, name, email, department, created_at, update_at. `Latest`
 ### Websites:
 ***[http://projects.adsingh.net/](http://projects.adsingh.net/)***
 ***[https://vfxguy.net/](https://vfxguy.net/)***
